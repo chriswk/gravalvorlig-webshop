@@ -1,22 +1,37 @@
 package no.gravalvorlig.domain
 
+import no.gravalvorlig.domain.Role
+
+/**
+ * User domain class.
+ */
 class User {
-    String firstName
-    String lastName
-    boolean isPartner = false
-    String email
-    String url
-    String address
-    String password
-    Long postcode
-    Long brRegNr
-    static constraints = {
-        firstName(nullable: false, size:1..32)
-        lastName(nullable: false, size:1..32)
-        address(nullable: false)
-        brRegNr()
-        email(email: true, unique: true)
-        password()
-        url(url: true)
-    }
+	static transients = ['pass']
+	static hasMany = [authorities: Role]
+	static belongsTo = Role
+
+	/** Username */
+	String username
+	/** User Real Name*/
+	String userRealName
+	/** MD5 Password */
+	String passwd
+	/** enabled */
+	boolean enabled
+
+	String email
+	boolean emailShow
+
+	/** description */
+	String description = ''
+
+	/** plain password to create a MD5 password */
+	String pass = '[secret]'
+
+	static constraints = {
+		username(blank: false, unique: true)
+		userRealName(blank: false)
+		passwd(blank: false)
+		enabled()
+	}
 }

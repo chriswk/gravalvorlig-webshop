@@ -1,18 +1,27 @@
 package no.gravalvorlig.domain
 
 class Product {
-    String productCode
     String name
-    Long price
-    String details
-    byte[] bigImage
-    byte[] thumbnail
+    String description
+
     static constraints = {
-        productCode(unique: true, blank:false)
-        name(blank:false)
-        price(blank:false)
-        details(blank:false)
-        bigImage(maxSize:10241024)
-        thumbnail(maxSize:65536)
+        name(blank:false, unique:true)
+        description(blank:false, validator: {
+                it?.indexOf("<script") < 0 &&
+                it?.indexOf("<link") < 0
+            })
+    }
+
+    static mapping = {
+        cache usage:"transactional"
+    }
+
+    static belongsTo = [category:Category]
+
+    static searchable = true
+
+    @Override
+    int compareTo(other) {
+        name.compareTo(other?.name)
     }
 }
