@@ -1,10 +1,21 @@
 package no.gravalvorlig.domain
 
+import no.gravalvorlig.domain.User
+
+/**
+ * Authority domain class.
+ */
 class Role {
-    String rolename
-    String displayname
-    static constraints = {
-        rolename(unique: true, nullable: false)
-        displayname(blank:false)
-    }
+
+	static hasMany = [people: User]
+
+	/** description */
+	String description
+	/** ROLE String */
+	String authority
+
+	static constraints = {
+		authority(blank: false, unique: true)
+		description()
+	}
 }

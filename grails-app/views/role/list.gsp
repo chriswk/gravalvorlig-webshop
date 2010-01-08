@@ -1,53 +1,49 @@
+<head>
+	<meta name="layout" content="main" />
+	<title>Role List</title>
+</head>
 
-<%@ page import="no.gravalvorlig.domain.Role" %>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'role.label', default: 'Role')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
-    </head>
-    <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
-        </div>
-        <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
-            </g:if>
-            <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'role.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="rolename" title="${message(code: 'role.rolename.label', default: 'Rolename')}" />
-                        
-                            <g:sortableColumn property="displayname" title="${message(code: 'role.displayname.label', default: 'Displayname')}" />
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${roleInstanceList}" status="i" var="roleInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${roleInstance.id}">${fieldValue(bean: roleInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: roleInstance, field: "rolename")}</td>
-                        
-                            <td>${fieldValue(bean: roleInstance, field: "displayname")}</td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${roleInstanceTotal}" />
-            </div>
-        </div>
-    </body>
-</html>
+<body>
+
+	<div class="nav">
+		<span class="menuButton"><a class="home" href="${createLinkTo(dir:'')}">Home</a></span>
+		<span class="menuButton"><g:link class="create" action="create">New Role</g:link></span>
+	</div>
+
+	<div class="body">
+		<h1>Role List</h1>
+		<g:if test="${flash.message}">
+		<div class="message">${flash.message}</div>
+		</g:if>
+		<div class="list">
+			<table>
+			<thead>
+				<tr>
+					<g:sortableColumn property="id" title="ID" />
+					<g:sortableColumn property="authority" title="Role Name" />
+					<g:sortableColumn property="description" title="Description" />
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+			<g:each in="${authorityList}" status="i" var="authority">
+				<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+					<td>${authority.id}</td>
+					<td>${authority.authority?.encodeAsHTML()}</td>
+					<td>${authority.description?.encodeAsHTML()}</td>
+					<td class="actionButtons">
+						<span class="actionButton">
+							<g:link action="show" id="${authority.id}">Show</g:link>
+						</span>
+					</td>
+				</tr>
+			</g:each>
+			</tbody>
+			</table>
+		</div>
+
+		<div class="paginateButtons">
+			<g:paginate total="${no.gravalvorlig.domain.Role.count()}" />
+		</div>
+	</div>
+</body>
