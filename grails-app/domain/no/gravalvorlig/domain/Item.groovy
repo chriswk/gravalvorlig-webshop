@@ -11,7 +11,6 @@ class Item  implements Serializable{
     static constraints = {
         name(blank:false, maxSize:128)
         description(maxSize:2000)
-        price(min:0.0)
         latitude(nullable:true)
         longitude(nullable:true)
     }

@@ -7,7 +7,7 @@ import no.gravalvorlig.domain.Role
  */
 class User {
 	static transients = ['pass']
-	static hasMany = [authorities: Role]
+	static hasMany = [authorities: Role, newsposts: NewsItem]
 	static belongsTo = Role
 
 	/** Username */
